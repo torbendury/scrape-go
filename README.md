@@ -24,6 +24,8 @@ Usage of scrape-go:
         NOT IMPLEMENTED YET: Set to true if you want to scrape images.
   -link-depth int
         Maximum scraping depth. (default 5)
+  -url-outfile string
+        The file to write scraped URLs to. (default "urls.txt")
   -urls
         Set to true if you want to scrape deep link URLs.
 ```

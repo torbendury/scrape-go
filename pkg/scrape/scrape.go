@@ -1,10 +1,12 @@
 package scrape
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -14,9 +16,11 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+// Scraper mainly holds scraping information about URLs, images and file paths. It gets constructed by NewScraper().
 type Scraper struct {
 	baseUrl            string
 	scrapeUrls         bool
+	urlFile            string
 	linkDepth          int
 	allowUrlDuplicates bool
 	scrapeImages       bool
@@ -24,14 +28,11 @@ type Scraper struct {
 	imageFileList      []string
 }
 
-type ScrapeResults struct {
-	Links      []string
-	ImagePaths []string
-}
-
-func NewScraper(baseUrl string, scrapeUrls bool, linkDepth int, allowUrlDuplicates bool, scrapeImages bool) *Scraper {
+// NewScraper constructs a new Scraper. It includes users information about the configuration for web scraping and creates empty slices for URLs and image paths.
+func NewScraper(baseUrl string, scrapeUrls bool, urlFile string, linkDepth int, allowUrlDuplicates bool, scrapeImages bool) *Scraper {
 	return &Scraper{
 		scrapeUrls:         scrapeUrls,
+		urlFile:            urlFile,
 		linkDepth:          linkDepth,
 		allowUrlDuplicates: allowUrlDuplicates,
 		scrapeImages:       scrapeImages,
@@ -41,6 +42,7 @@ func NewScraper(baseUrl string, scrapeUrls bool, linkDepth int, allowUrlDuplicat
 	}
 }
 
+// StartScrape inits scraping for URLs and images. Also, if `allowUrlDuplicates` is set to `false`, it cleans the list of found URLs.
 func (s *Scraper) StartScrape() error {
 	err := s.startUrlScrape()
 	if err != nil {
@@ -86,12 +88,22 @@ func (s *Scraper) startImageScrape() error {
 	return nil
 }
 
-func (s *Scraper) PrintResults() {
+// SaveResults saves found URLs and images to files.
+func (s *Scraper) SaveResults() {
 	if s.scrapeUrls {
-		fmt.Println("URL list:")
-		for _, url := range s.urlList {
-			fmt.Println(url)
+		file, err := os.OpenFile(s.urlFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			panic(err)
 		}
+		defer file.Close()
+		writer := bufio.NewWriter(file)
+		for _, url := range s.urlList {
+			_, err := writer.WriteString(url + "\n")
+			if err != nil {
+				panic(err)
+			}
+		}
+		writer.Flush()
 	}
 	if s.scrapeImages {
 		fmt.Println("Image files list:")
@@ -131,7 +143,7 @@ func (s *Scraper) scrapeUrl(baseUrl string) ([]string, error) {
 				if !slices.Contains(s.urlList, res) && !slices.Contains(results, res) {
 					results = append(results, res)
 				}
-			} else if url != "/" && url != "" {
+			} else if url != "/" && url != "" && !strings.HasPrefix(url, "#") {
 				res := s.baseUrl + url
 				if !slices.Contains(s.urlList, res) && !slices.Contains(results, res) {
 					results = append(results, url)

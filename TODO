@@ -1,0 +1,11 @@
+todo list for `scrape-go`.
+
+Implementations
+✔ usage of custom user agents @started(23-09-10 21:36) @done(23-09-10 21:38) @lasted(2m45s)
+☐ limit req/s
+☐ optional cleanup for everything except baseUrl descendants
+☐ image download
+☐ intermediate duplicate cleanup for performance
+
+Chore
+☐ documentation

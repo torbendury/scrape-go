@@ -2,6 +2,8 @@
 
 A tiny scraper built with Golang. Work in progress!
 
+I'm very aware of [gocolly/colly](https://github.com/gocolly/colly) but would love to experiment with scraping and learning a bit more than by using a framework directly from the start.
+
 See [TODO](TODO).
 
 ## License

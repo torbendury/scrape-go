@@ -6,6 +6,10 @@ I'm very aware of [gocolly/colly](https://github.com/gocolly/colly) but would lo
 
 See [TODO](TODO).
 
+## A well meant advice
+
+**For heavens sake please don't use this tool for anything serious.** I'm mainly experimenting here and don't want to build a tool for the whole world. I'm mainly figuring out how far I can get with my Go knowledge, how to make my code work, and once I reach my limit, I try to learn enough to just about clear the next hurdle.
+
 ## License
 
 See [LICENSE](LICENSE).

@@ -22,3 +22,4 @@ go.work
 
 # Output file from cli
 urls.txt
+images/

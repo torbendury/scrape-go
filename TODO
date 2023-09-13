@@ -9,6 +9,9 @@ Implementations
 ☐ refactor scrapeUrl and scrapeImage to one function
 ☐ try to decide file type by content (png, svg, ...)
 ☐ parallelize scraping
+☐ try out colly for scrape action
+☐ try out cobra for CLI action
 
 Chore
 ✔ initial documentation @started(23-09-10 22:02) @done(23-09-10 22:06) @lasted(4m5s)
+☐ simplify the code base, future Torben will see that >70% are trash anyway

@@ -21,7 +21,9 @@ Usage of scrape-go:
   -base-url string
         The base URL to start with.
   -images
-        NOT IMPLEMENTED YET: Set to true if you want to scrape images.
+        Set to true if you want to scrape images.
+  -images-dir string
+        The directory to save scraped images to. (default "./images/")
   -link-depth int
         Maximum scraping depth. (default 5)
   -url-outfile string
